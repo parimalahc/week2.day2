@@ -19,15 +19,24 @@ public class PlayWithHyperLinks {
 		driver.navigate().back();
 		System.out.println(driver.findElement(By.partialLinkText("Find where am")).getAttribute("href"));
 		driver.findElement(By.linkText("Verify am I broken?")).click();
-		if (driver.getTitle().contains("404 – Not Found")) {
+		if (driver.getTitle().contains("404 â€“ Not Found")) {
 			System.out.println("It is a broken link");
 		} else {
 			System.out.println("It is not a broken link");
 		}
 		driver.navigate().back();
 
-		driver.findElement(By.xpath("//label/preceding-sibling::a")).click();
-		driver.navigate().back();
+		String link1 = driver.findElement(By.linkText("Go to Home Page")).getAttribute("href");
+		String link2 = driver.findElement(By.linkText("Go to Home Page")).getAttribute("href"); // (//a[text()='Go to
+																								// Home Page'])[2]
+
+		if (link1.equals(link2)) {
+			driver.navigate().to(link2);
+
+			System.out.println("Both links are Interacted");
+		} else {
+			System.out.println("Not interacted");
+		}
 
 		List<WebElement> noOfLinks = driver.findElements(By.tagName("a"));
 		System.out.println(noOfLinks.size());
